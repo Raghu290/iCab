@@ -1,0 +1,11 @@
+com/travel/iCab/manager/test/InputManagerTest.class
+com/travel/iCab/manager/test/OutputManagerTest.class
+com/travel/iCab/distance/impl/test/GraphHopperDistanceMatrixCreaterTest.class
+com/travel/iCab/test/AppTestRunner.class
+com/travel/iCab/test/AppTestSuite.class
+com/travel/iCab/output/impl/test/CsvWriterTest.class
+com/travel/iCab/manager/test/GeocodeManagerTest.class
+com/travel/iCab/manager/test/OptaplannerManagerTest.class
+com/travel/iCab/geocode/impl/test/GoogleMapsGeocoderTest.class
+com/travel/iCab/manager/test/DistanceManagerTest.class
+com/travel/iCab/manager/test/ProcessManagerTest.class

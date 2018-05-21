@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver>
+  <!--<environmentMode>FAST_ASSERT</environmentMode>-->
+  <solutionClass>com.travel.iCab.optaplanner.CabAllocationSolution</solutionClass>
+  <entityClass>com.travel.iCab.domain.DropPoint</entityClass>
+  <entityClass>com.travel.iCab.domain.Employee</entityClass>
+
+  <scoreDirectorFactory>
+    <scoreDefinitionType>HARD_SOFT_LONG</scoreDefinitionType>
+    <easyScoreCalculatorClass>com.travel.iCab.optaplanner.CabAllocationEScoreCalculator</easyScoreCalculatorClass>
+    <!--<incrementalScoreCalculatorClass>org.optaplanner.examples.vehiclerouting.solver.score.VehicleRoutingIncrementalScoreCalculator</incrementalScoreCalculatorClass>-->
+    <!-- <scoreDrl>org/optaplanner/examples/vehiclerouting/solver/vehicleRoutingScoreRules.drl</scoreDrl> -->
+    <!--<assertionScoreDirectorFactory>-->
+      <!--<easyScoreCalculatorClass>org.optaplanner.examples.vehiclerouting.solver.score.VehicleRoutingEasyScoreCalculator</easyScoreCalculatorClass>-->
+    <!--</assertionScoreDirectorFactory>-->
+    <initializingScoreTrend>ONLY_DOWN</initializingScoreTrend>
+  </scoreDirectorFactory>
+
+  <termination>
+    <minutesSpentLimit>1</minutesSpentLimit>
+  </termination>
+  <constructionHeuristic>
+    <constructionHeuristicType>FIRST_FIT_DECREASING</constructionHeuristicType>
+  </constructionHeuristic>	
+  <localSearch>
+	<termination>
+	  <unimprovedMinutesSpentLimit>1</unimprovedMinutesSpentLimit>
+	</termination>
+	<unionMoveSelector>
+	
+	<!-- <changeMoveSelector/>
+	<swapMoveSelector/>
+	  -->
+          <changeMoveSelector>
+            <entitySelector id="entitySelector1"/>
+            <valueSelector>
+              <nearbySelection>
+                <originEntitySelector mimicSelectorRef="entitySelector1"/>
+                <nearbyDistanceMeterClass>com.travel.iCab.optaplanner.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+              </nearbySelection>
+            </valueSelector>
+          </changeMoveSelector>
+          <swapMoveSelector>
+            <entitySelector id="entitySelector2"/>
+            <secondaryEntitySelector>
+              <nearbySelection>
+                <originEntitySelector mimicSelectorRef="entitySelector2"/>
+                <nearbyDistanceMeterClass>com.travel.iCab.optaplanner.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                <parabolicDistributionSizeMaximum>40</parabolicDistributionSizeMaximum>
+              </nearbySelection>
+            </secondaryEntitySelector>
+          </swapMoveSelector>
+         
+             <subChainChangeMoveSelector>
+        <selectReversingMoveToo>true</selectReversingMoveToo>
+      </subChainChangeMoveSelector>
+      <subChainSwapMoveSelector>
+        <selectReversingMoveToo>true</selectReversingMoveToo>
+      </subChainSwapMoveSelector>
+     <!--     <tailChainSwapMoveSelector>
+            <entitySelector id="entitySelector3"/>
+            <valueSelector>
+              <nearbySelection>
+                <originEntitySelector mimicSelectorRef="entitySelector3"/>
+                <nearbyDistanceMeterClass>com.travel.iCab.optaplanner.CustomerNearbyDistanceMeter</nearbyDistanceMeterClass>
+                <parabolicDistributionSizeMaximum>2</parabolicDistributionSizeMaximum>
+              </nearbySelection>
+            </valueSelector>
+          </tailChainSwapMoveSelector>
+          -->
+        </unionMoveSelector>
+     <!--    
+    <unionMoveSelector>
+      <changeMoveSelector/>
+      <swapMoveSelector/>
+      <subChainChangeMoveSelector>
+        <selectReversingMoveToo>true</selectReversingMoveToo>
+      </subChainChangeMoveSelector>
+      <subChainSwapMoveSelector>
+        <selectReversingMoveToo>true</selectReversingMoveToo>
+      </subChainSwapMoveSelector>
+    </unionMoveSelector>
+    -->
+    <acceptor>
+      <lateAcceptanceSize>10</lateAcceptanceSize>
+    </acceptor>
+    <forager>
+      <acceptedCountLimit>1</acceptedCountLimit>
+    </forager>
+  </localSearch>
+</solver>
